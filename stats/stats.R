@@ -8,7 +8,7 @@ theme_set(theme_bw())
 
 #----------------------------------------------------------
 traininginfo <- read.csv('stepwisemodel.csv',header=TRUE,sep=",")
-mistaTraining <- subset(traininginfo, dim==30 & (trainingdata=='jrnd' | trainingdata=='jrndn') & (track=='mwr' | track=='opt' | track=='cma' | track=='rnd' ))
+mistaTraining <- subset(traininginfo, dim==30 & (trainingdata=='j.rnd' | trainingdata=='j.rndn') & (track=='mwr' | track=='opt' | track=='cma' | track=='rnd' ))
 head(mistaTraining)
 summary(mistaTraining)
 
@@ -36,7 +36,7 @@ ggsave(file=fname)#, width=6, height=5)
 
 #----------------------------------------------------------
 modelinfo <- read.csv('stepwisemodel.csv',header=TRUE,sep=",")
-mistaModel <- subset(modelinfo, dim==30 & (trainingdata=='jrnd' | trainingdata=='jrndn') & (track=='mwr' | track=='opt' | track=='cma' | track=='rnd' | track=='all') & C==10)
+mistaModel <- subset(modelinfo, dim==30 & (trainingdata=='j.rnd' | trainingdata=='j.rndn') & (track=='mwr' | track=='opt' | track=='cma' | track=='rnd' | track=='all') & C==10)
 head(mistaModel)
 summary(mistaModel)
 
@@ -66,7 +66,7 @@ ggsave(file=fname)#, width=6, height=12)
 
 #----------------------------------------------------------
 ratioinfo <- read.csv('stepwiseratio.csv',header=TRUE,sep=",")
-mistaRatio <- subset(ratioinfo, dim==30 & ( data=='jrnd' | data=='jrndn' ))
+mistaRatio <- subset(ratioinfo, dim==30 & ( data=='j.rnd' | data=='j.rndn' ))
 mistaRatio <- subset(mistaRatio, track=='' | track=='mwr' | track=='opt' | track=='cma' | track=='rnd' | track=='all' ) 
 #mistaRatio <- subset(mistaRatio, C==10 | C=='')
 mistaRatio <- subset(mistaRatio, set=='test') # only report test-set
@@ -83,8 +83,8 @@ mistaRatio$trackrank <- interaction(mistaRatio$track, mistaRatio$rank)
 
 pl <- ggplot(data=mistaRatio , aes(y=rho, x=track , fill=rank)) + geom_boxplot() 
 # Divide with "trainingdata" vertical, 
-pl <- pl + facet_grid(data ~ .)
-pl <- pl + xlab('') + ylab(paste('percentage relative deviation from optimality, ',expression(rho),'(%)'))                      
+pl <- pl + facet_grid(data ~ track, scale='free')
+pl <- pl + xlab('') + ylab(expression('percentage relative deviation from optimality, '*~ rho *~'(%)'))         
 pl <- pl + scale_fill_manual(name="Model\n",
     values=c("grey20","grey40","grey60","grey80","grey100"),
     breaks=c("", "b", "f", "p" , "a"),

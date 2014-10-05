@@ -1,9 +1,9 @@
  { %\footnotesize
 \centering
-  \begin{tabular}{|ll|} %p{0.45\textwidth}|p{0.4\textwidth}|}
-\hline
+  \begin{tabular}{ll} %p{0.45\textwidth}|p{0.4\textwidth}|}
+\toprule
   $\vphi$ & Feature description \\
-\hline
+\midrule
   \phiproc & job processing time \\
   \phistartTime & job start-time \\
   \phiendTime & job end-time\\
@@ -17,7 +17,7 @@
   \phiwait & time job had to wait \\
   \phislotCreated & idle time created \\      
   \phitotProc & total processing time for job  \\
-\hline
+\bottomrule
   \end{tabular}
 }
  %Feature description for job $J_j$ on machine $M_a$ given current temporal schedule, where the set of jobs already dispatched are $J\subset\mathcal{J}$ on corresponding set of machines $\mathcal{M}_j\subset\mathcal{M}$
