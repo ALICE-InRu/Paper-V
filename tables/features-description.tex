@@ -1,0 +1,25 @@
+ {\footnotesize
+ \begin{center}
+  \begin{tabular}{|cll|} %p{0.45\textwidth}|p{0.4\textwidth}|}
+   \hline
+  $\vec{\phi}$ & Feature description & Mathematical formulation\\ \hline
+  $\phi_1$ & processing time & $p_{ja}$\\
+  $\phi_2$ & start-time & $x_s(a,j)$ \\
+  $\phi_3$ & end-time & $x_f(a,j)$ \\
+  $\phi_4$ & when machine is next free & $\max_{j'\in \mathcal{J}_a} \{x_f(a,j')\}$\\
+  $\phi_5$ & current makespan & $\max_{\substack{j'\in \mathcal{J}\\ a'\in \mathcal{M}_{j'}}}\{x_f(a',j')\}$ \\
+  $\phi_6$ & work remaining & $\sum_{a'\in\mathcal{M}\setminus \mathcal{M}_{j}}p_{ja'}$ \\
+  $\phi_7$ & most work remaining & $\max_{j'\in\mathcal{J}}\left\{\sum_{a'\in\mathcal{M}\setminus \mathcal{M}_{j'}}p_{j'a'}\right\}$ \\
+  $\phi_8$ & slack time for machine & $\sum_{j'\in \mathcal{J}_a}s(a,j')$ \\
+  $\phi_9$ & slack time for all machines & $\sum_{a'\in M}\sum_{j'\in J_{a'}}s(a',j')$  \\
+  $\phi_{10}$ & slack weighted w.r.t. number of tasks assigned & $^{\phi_{9}}/_{\sum_{j'\in J}\abs{\mathcal{M}_j}}$ \\
+  $\phi_{11}$ & time job had to wait & $x_s(a,j)-\max_{j'\in \mathcal{J}_a\setminus\{J_j\}}\{x_f(a,j')\}$\\
+  $\phi_{12}$ & size of slot created by assignment & \aths{endurskoða m.t.t. $\tilde{s}$}\\
+  $\phi_{13}$ & total processing time for job & $\sum_{M_{a'}\in \mathcal{M}} p(j,a')$ \\
+  $\phi_{14}$ & total processing time for all jobs & $\sum_{J_{j'}\in \mathcal{J}}\sum_{M_{a'}\in \mathcal{M}} p(j',a')$\\
+  $\phi_{15}$ & mean processing time for all jobs & $^{\phi_{14}}/_{n\cdot m}$\\
+  $\phi_{16}$ & range of processing times over all jobs & $\max_{\substack{J_{j'}\in\mathcal{J}\\ M_{a'}\in\mathcal{M}}}\{p_{j'a'}\}-\min_{\substack{J_{j'}\in \mathcal{J}\\ M_{a'}\in\mathcal{M}}}\{p_{j'a'}\}$ \\
+   \hline
+  \end{tabular}
+ \end{center}}
+ %  Feature description for job $J_j$ on machine $M_a$ given current temporal schedule, where the set of jobs already dispatched are $J\subset\mathcal{J}$ on corresponding set of machines $\mathcal{M}_j\subset\mathcal{M}$
