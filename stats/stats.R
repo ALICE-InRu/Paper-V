@@ -21,16 +21,16 @@ mistaTraining$track <- factor(mistaTraining$track, c("opt", "cma", "mwr" , "rnd"
 pl <- qplot(data=mistaTraining,step,l,geom=c("line"),linetype=rank) +
   ylab('size of preference set, l') + xlab('step, k')
 # Divide with "trainingdata" vertical, "track" horizontal
-pl <- pl + facet_grid( track~trainingdata)
+pl <- pl + facet_grid(trainingdata~track)
 # legend at bottom
 pl <- pl + theme(legend.direction = "horizontal",legend.position = "bottom") 
 # more descriptive name of ranking legends
-pl <- pl + scale_linetype_discrete(name="Model",
+pl <- pl + scale_linetype_discrete(name="Ranking",
   breaks=c("b", "f", "p" , "a"),
-  labels=c("base ranking", "full pareto ranking", "partial pareto ranking" , "all rankings")) 
+  labels=c("base", "full subsequent", "partial subsequent" , "all")) 
 print(pl)
 fname=paste('../figures/numTrainingData','.pdf',sep='')
-ggsave(file=fname)#, width=6, height=5)
+ggsave(file=fname, width=6, height=4)
 #----------------------------------------------------------
 
 
@@ -53,9 +53,9 @@ pl <- pl + facet_grid(track ~ trainingdata )
 # legend at bottom
 pl <- pl + theme(legend.direction = "horizontal",legend.position = "bottom") 
 # more descriptive name of ranking legends
-pl <- pl + scale_linetype_discrete(name="Model",
+pl <- pl + scale_linetype_discrete(name="Ranking",
    breaks=c("b", "f", "p" , "a"),
-   labels=c("base ranking", "full pareto ranking", "partial pareto ranking" , "all rankings")) 
+   labels=c("base", "full subsequent", "partial subsequent" , "all")) 
 print(pl)
 fname=paste('../figures/trainingAccuracy','.pdf',sep='')
 ggsave(file=fname)#, width=6, height=12)
@@ -92,7 +92,7 @@ pl <- pl + scale_fill_manual(name="Model\n",
 pl <- pl + theme(legend.direction = "horizontal",legend.position = "bottom") 
 print(pl)
 fname=paste('../figures/boxplot','.pdf',sep='')
-ggsave(file=fname)#, width=6, height=5)
+ggsave(file=fname, width=6, height=5)
 #----------------------------------------------------------
 mistaRatio$fullmodel <- interaction(mistaRatio$model, mistaRatio$trackrank)
 for(d in unique(mistaRatio$data)) {
@@ -153,7 +153,6 @@ for(d in unique(mistaRatio$data)) {
   
   
 }
-
 
 
 

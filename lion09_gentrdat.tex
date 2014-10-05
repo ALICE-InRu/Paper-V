@@ -47,9 +47,7 @@
 
 \maketitle
 \begin{abstract}
-\begin{quote}
 A supervised learning approach to generating composite linear priority dispatching rules for scheduling is studied. In particular we investigate a number of strategies for generating training data for learning a linear dispatching rule using preference learning. The results show that generating training data set from optimal solutions only is not as effective as when suboptimal solutions are added to the set. Furthermore, different strategies for creating preference pairs is investigated as well as suboptimal solution trajectories. The different strategies are investigated on 2000 randomly generated problem instances using two different problems generator settings.
-\end{quote}
 \end{abstract}
 
 \noindent When applying learning algorithms, the training set is of paramount importance. Training set should have sufficient knowledge of the problem at hand. This is done by the use of features, which are supposed to capture the essential measures of a problem's state. For this purpose, the job-shop scheduling problem (JSP) is used as a case study to illustrate a methodology for generating a meaningful training data, which can be successfully learned. 
@@ -91,7 +89,7 @@ The machine order is a random permutation of all of the machines in the job-shop
 
 For each data distribution $N_{\text{train}}$  and $N_{\text{test}}$ problem instances were generated for training and testing, respectively. Values for $N$ are given in \cref{tbl:data:sim}. Note, that difficult problem instances are not filtered out beforehand, such as the approach in \cite{Whitley}. 
 
-\begin{table}\centering
+\begin{table}[t]\centering
 \caption{Problem space distributions, $\mathcal{P}$. }\label{tbl:data:sim}
 {\renewcommand{\arraystretch}{1.2}\footnotesize
 \begin{tabular}{lcccl}\toprule
@@ -105,7 +103,7 @@ $\mathcal{P}_{j.rndn}$ & $6\times5$ & 500 & 500 & random-narrow \\
 }
 \end{table}
 
-\begin{table}  \centering
+\begin{table}[t]  \centering
   \caption{Feature space, $\mathcal{F}$.}
   \label{tbl:jssp:feat}
   \input{tables/features-description-simple}
@@ -223,29 +221,23 @@ the optimal makespan varies between problem instances the performance measure is
 100\%\end{equation}
 which indicates the percentage relative deviation from optimality. 
 
-The size of the training set $\Phi$, for different trajectories is depicted in \cref{fig:sizeoftrset}, and the subsequent preference set, $S$, also across varying ranking strategies is depicted in \cref{fig:sizeofprefset}, where the figure is divided vertically by problem space and horizontally by trajectory scheme.
+The preference set, $S$, across varying trajectories and ranking strategies is depicted in \cref{fig:sizeofprefset}, where the figure is divided horizontally by problem space and vertically by trajectory scheme.
  
-
-A linear ordinal regression model (PREF) was created for each preference set, $S$, for problem spaces $\mathcal{P}_{j.rnd}$ and $\mathcal{P}_{j.rndn}$. A box-plot with the results of percentage relative deviation from optimality, $\rho$, defined by \cref{eq:ratio}, is presented in \cref{fig:results}. The boxplots are grouped w.r.t. trajectory schemes and color-coded w.r.t. ranking schemes. 
+A linear ordinal regression model (PREF) was created for each preference set, $S$, for problem spaces $\mathcal{P}_{j.rnd}$ and $\mathcal{P}_{j.rndn}$. A box-plot with the results of percentage relative deviation from optimality, $\rho$, defined by \cref{eq:ratio}, is presented in \cref{fig:results}. The box-plots are grouped w.r.t. trajectory strategies and colour-coded w.r.t. ranking schemes. 
 Moreover, the simple priority dispatching rule MWR and the weights obtained by the CMA-ES optimisation used to obtain the training sets $\Phi^{mwr}$ and $\Phi^{cma}$ respectively, are shown in black in the far left of the group for comparison.
 From \cref{fig:results} it is apparent there can be a performance edge gained by implementing a particular ranking or trajectory strategy, moreover the behaviour is analogous across different disciplines. 
 Main statistics are reported in \cref{tbl:results:jrnd,tbl:results:jrndn} for $\mathcal{P}_{j.rnd}$ and $\mathcal{P}_{j.rndn}$, respectively. Models are sorted w.r.t. mean relative error.
 
 \begin{figure} \centering
-\missingfigure{figures/numTrainingData}	
-\caption{Size of training set, $|\Phi|$ for different trajectory strategies.}
-\label{fig:sizeoftrset}
-\end{figure}
-\begin{figure} \centering
 \includegraphics[width=\columnwidth]{figures/numTrainingData}
-\caption{Size of preference set, $l$ for different trajectory and ranking strategies.}
+\caption{Size of preference set, $l=|S|$, for different trajectories and ranking strategies obtained from the training set for problem spaces $\mathcal{P}_{j.rnd}$ and $\mathcal{P}_{j.rndn}$.}
 \label{fig:sizeofprefset}
 \end{figure}
 
 
 \begin{figure}[t]\centering 
 \includegraphics[width=\columnwidth]{figures/boxplot} 
-\caption{Box-plot of results for linear ordinal regression model trained on various preference sets using test sets for problem spaces $\mathcal{P}_{j.rnd}$ (above) and $\mathcal{P}_{j.rndn}$ (below).  }
+\caption{Box-plot of results for linear ordinal regression model trained on various preference sets using test sets for problem spaces $\mathcal{P}_{j.rnd}$ and $\mathcal{P}_{j.rndn}$.  }
 \label{fig:results}
 \end{figure}
  
@@ -328,7 +320,7 @@ the same preference information as $S_f$. The results hold for both problem spac
 
 Combining the ranking schemes, $S_{a}$, does not improve the individual ranking-schemes as there is no statistical difference between \PREF{}{a} and \PREF{}{b}, \PREF{}{f} nor \PREF{}{p}  across all  disciplines, save \PREF{cma}{a} for $\mathcal{P}_{j.rndn}$ which yielded a considerably worse mean relative error. 
 
-Moreover, there is no statistical difference between either of the Pareto ranking-schemes outperform and the original $S_b$ set-up from \cite{InRu11a}. However overall, the Pareto-ranking schemes results in lower mean relative error, and since a smaller preference set is preferred, it is opted to use the $S_{p}$ ranking scheme. 
+Moreover, there is no statistical difference between either of the subsequent ranking-schemes outperform and the original $S_b$ set-up from \cite{InRu11a}. However overall, the subsequent ranking schemes results in lower mean relative error, and since a smaller preference set is preferred, it is opted to use the $S_{p}$ ranking scheme. 
 
 Furthermore, it is noted that \PREF{mwr}{} model is able to significantly outperform the original heuristics, MWR, used to create the training data $\Phi^{mwr}$, irrespective of the ranking schemes. Whereas the fixed weights found via CMA-ES outperform the \PREF{cma}{} models for all ranking schemes. This implies that ranking scheme is relatively irrelevant. The results hold for both problem spaces. 
 
@@ -348,7 +340,7 @@ For $\mathcal{P}_{j.rnd}$  the best mean relative error was for \PREF{all}{}, in
 The rational for using the $\Phi^{cma}$ strategy was mostly due to the fact a linear classifier is creating the training data (using the weights found via CMA-ES optimisation), hence the training data created should be linearly separable, which in turn should boost the training accuracy for a linear classification learning model. However, this is not the case, since \PREF{cma}{} does not improve the original CMA-ES heuristic which 
 was used to guide its training set $\Phi^{cma}$. However the \PREF{cma}{} approach is preferred to that of \PREF{mwr}{}, so there is some information gained by following the CMA-ES obtained weights instead of simple priority dispatching rules, such as MWR. 
 %
-Let's inspect the CMA-ES guided training data more closely, in particular the linear weights for \cref{eq:jssp:linweights}. The weights are depicted in \cref{fig:weights} for problem spaces $\mathcal{P}_{j.rnd}$ (above) and $\mathcal{P}_{j.rndn}$ (below). The original weights found via CMA-ES optimisation, that are used to guide the collection of training data, are depicted dashed whereas weights obtained by the linear classification \PREF{cma}{p} model are depicted solid. 
+Let's inspect the CMA-ES guided training data more closely, in particular the linear weights for \cref{eq:jssp:linweights}. The weights are depicted in \cref{fig:weights} for problem spaces $\mathcal{P}_{j.rnd}$ (left) and $\mathcal{P}_{j.rndn}$ (right). The original weights found via CMA-ES optimisation, that are used to guide the collection of training data, are depicted dashed whereas weights obtained by the linear classification \PREF{cma}{p} model are depicted solid. 
 
 From the CMA-ES experiments it is clear that a lot of weight is applied to decision variable $w_6$, which corresponds implementing MWR, yet the existing weights for other features directs the evolutionary search to a ``better'' training data to learn, than the PREF models. Arguably, the training data could be even better, however implementing CMA-ES is rather costly, in fact in \cite{InRu14a} the optimisation had not fully converged given its allocated 288hrs of computation time.
 
@@ -357,20 +349,24 @@ Ideally,  it would be best to combine both methodologies: Collect training data 
 
 \begin{figure}\centering
 \subfloat[][$\mathcal{P}_{j.rnd}$]{\label{fig:weights:jrnd}
-\includegraphics[width=0.5\linewidth]{figures/weights_jrnd}}
+\includegraphics[width=0.47\linewidth]{figures/weights_jrnd}}
 \subfloat[][$\mathcal{P}_{j.rndn}$]{\label{fig:weights:jrndn}
-\includegraphics[width=0.5\linewidth]{figures/weights_jrndn}}
+\includegraphics[width=0.47\linewidth]{figures/weights_jrndn}}
 \caption{Linear weights ($w_1$ to $w_{13}$ from left to right, top to bottom) found via CMA-ES optimisation (dashed), and weights found via learning classification \PREF{cma}{p} model (solid). }\label{fig:weights}
 \end{figure}
 
 \section{Summary and conclusion}\label{sec:summary}
-The study presents strategies for how to generate training data to be used in supervised learning of linear composite dispatching rules for job shop scheduling.
+The study presents strategies for how to generate training data to be used in supervised learning of linear composite dispatching rules for job-shop scheduling.
 The experimental results provide evidence of the benefit of adding sub-optimal solutions to the training set, apart from optimal ones.
-The classification of optimal\footnote{Here the tasks labelled `optimal' do not necessarily yield the optimum makespan (except in the case of following optimal trajectories), instead these are the optimal dispatches for the given partial schedule.} and suboptimal features are of paramount importance. The subsequent rankings are not of much value, since they are disregarded anyway. However, the trajectories to create training instances have to be varied.
+The classification of optimal\footnote{Here the tasks labelled `optimal' do not necessarily yield the optimum makespan (except in the case of following optimal trajectories), instead these are the optimal dispatches for the given partial schedule.} and suboptimal features are of paramount importance. The subsequent rankings are not of much value, since they are disregarded anyway. 
+However, the trajectories to create training instances have to be varied to boost performance. This is due to the  fact that sampling only states that  correspond  to optimal or close-to optimal schedules isn't of much use when the model has diverged too far. Since we are dealing with sequential decision making, all future observation are dependent on previous operations. 
+Therefore, to account for this drawback, an imitation learning approach  by \cite{RossB10,RossGB11} could fruitful. 
+In that case, we could continue with our \PREF{opt}{} model, and collect a new training set by following the learned policy and use that to create a new model similar to the $\Phi^{all}$ scheme. In short, using the model to update itself. 
+This can be done several times until the weights converge. The benefit of this approach is that the states that are likely to occur in practice are investigated, and as such used to dissuade the model from making poor choices. Alas, due to the computational cost\footnote{Note, each partial schedule corresponding to a feature in $\Phi$ is optimised to obtain its correct labelling.} of collecting the training set $\Phi$, this sort of methodology isn't suitable for high dimensionality of job-shops. 
 
-Unlike \cite{Siggi10,Malik08,Russell09} learning only optimal training data was not fruitful. However, inspired by the original work by \cite{Siggi05}, having heuristic guide the generation of training data, but with nevertheless optimal labelling based on a solver, gave meaningful preference pairs which the learning algorithm could learn. In conclusion, henceforth, the training data will be generated with $S_{p}^{all}$ scheme for the authors' future work.
-
+Unlike \cite{Siggi10,Malik08,Russell09} learning only optimal training data was not fruitful. However, inspired by the original work by \cite{Siggi05}, having heuristic guide the generation of training data, but with nevertheless optimal labelling based on a solver, gave meaningful preference pairs which the learning algorithm could learn. In conclusion, henceforth, the training data will be generated with \PREF{all}{p} scheme for the authors' future work.
 Based on these preliminary experiments, we continue to test on a greater variety of problem data distributions for scheduling, namely job-shop and permutation flow-shop problems. Once training data has been carefully created, global dispatching rules can finally be learned, with the hope of implementing them for a greater number of jobs and machines. This is the focus of our current work.
+ 
  
  
 \bibliography{../references}
