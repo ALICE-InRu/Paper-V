@@ -60,7 +60,7 @@ As a consequence, a linear composite of dispatching rules (LCDR) was presented  
 \begin{equation}\label{eq:jssp:linweights}
 h(\vec{x}_j)=\big<{\vec{w}}\cdot{\vphi(\vec{x}_j)}\big>,
 \end{equation}
-yields the preference estimate for dispatching job $j$ that corresponds to post-decision state $\vec{x}_j$, where $\vphi(\vec{x}_j)$ denotes its feature mapping. The job dispatched is the following, 
+yields the preference estimate for dispatching job $J_j$ that corresponds to post-decision state $\vec{x}_j$, where $\vphi(\vec{x}_j)$ denotes its feature mapping. The job dispatched is the following, 
 \begin{equation}\label{eq:jstar}
 j^* = \arg\max_j\left\{h(\vec{x}_j)\right\}. 
 \end{equation}
@@ -114,9 +114,9 @@ $\mathcal{P}_{j.rndn}$ & $6\times5$ & 500 & 500 & random-narrow \\
 \section{JSP tree representation}\label{sec:gametree}
 When building a complete JSP schedule $\ell=n\cdot m$ dispatches must be made consecutively. 
 A job is placed at the earliest available time slot for its next machine, whilst still fulfilling constraints that each machine can handle, which is at most one job at each time, and jobs need to have finished their previous machines according to its machine order. 
-Unfinished jobs, referred to as the ready-list denoted $\mathcal{R}$, are dispatched one at a time according to a heuristic. After each dispatch, the schedule's current features are updated based on its resulting partial schedule. 
+Unfinished jobs, referred to as the job-list denoted $\mathcal{L}$, are dispatched one at a time according to a heuristic. After each dispatch, the schedule's current features are updated based on its resulting partial schedule. 
 For each possible post-decision state the temporal features, $\mathcal{F}$, applied in this study are given in \cref{tbl:jssp:feat}. These features are based on SDRs which are widespread in practice. For example if $\vec{w}$ is zero, save for $w_6=1$, then \cref{eq:jssp:linweights} gives $h(\vec{x}_j)>h(\vec{x}_i)$, 
-$\forall i$ which are jobs with less work remaining than job $j$, namely \cref{eq:jstar} yields the job with the highest \phiwrmJob\ value, 
+$\forall i$ which are jobs with less work remaining than job $J_j$, namely \cref{eq:jstar} yields the job with the highest \phiwrmJob\ value, 
 i.e., equivalent to dispatching rule most work remaining (MWR).
 
 
@@ -158,7 +158,7 @@ resulting features are labelled as undesirable or suboptimal. Only the resulting
 a suboptimal solution should be labelled undesirable. 
 
 The creation of the tree for job-shop scheduling can be done recursively for all possible permutation of dispatches 
-in the manner described above, resulting in a full \mbox{$n$-ary} tree %(since $|\mathcal{R}|\leq n$)
+in the manner described above, resulting in a full \mbox{$n$-ary} tree %(since $|\mathcal{L}|\leq n$)
 of height $\ell=n\cdot m$. Such an exhaustive search would yield at the most $n^{\ell}$ leaf nodes (worst case scenario being that no sub-trees merge). Now, since the internal vertices (i.e. partial schedules) are only of interest to learn,\footnote{The root is the empty initial schedule and for the last dispatch there is only one option left to dispatch, so there is no preferred `choice' to learn.} the number of those can be at the most \mbox{${}^{n^{\ell}-1}/_{n-1}$} \cite{Rosen03}.
 Even for small dimensions of $n$ and $m$ the number of internal vertices are quite substantial and thus 
 computationally expensive to investigate them all. 
@@ -168,8 +168,8 @@ The optimum makespan is known for each problem instance.
 At each time step (i.e. layer of the tree) a number of feature pairs are created. The feature pairs consist of the features 
 $\vphi_o$ resulting from optimal dispatches $o\in\mathcal{O}^{(k)}$, versus features $\vphi_s$ resulting from 
 suboptimal dispatches $s\in\mathcal{S}^{(k)}$ at time $k$. Note, 
-$\mathcal{O}^{(k)}\cup\mathcal{S}^{(k)}=\mathcal{R}^{(k)}$ and $\mathcal{O}^{(k)}\cap\mathcal{S}^{(k)}=\emptyset$.
-In particular, each job is compared against another job from the ready-list, $\mathcal{R}^{(k)}$, and if the makespan differs, i.e., $C_{\max}^{(s)} \gneq C_{\max}^{(o)}$, an optimal/suboptimal pair is created. However, if the makespan would be unaltered the pair is omitted since they give the same optimal makespan. This way, only features from a dispatch resulting in a suboptimal solution is labelled undesirable.
+$\mathcal{O}^{(k)}\cup\mathcal{S}^{(k)}=\mathcal{L}^{(k)}$ and $\mathcal{O}^{(k)}\cap\mathcal{S}^{(k)}=\emptyset$.
+In particular, each job is compared against another job from the job-list, $\mathcal{L}^{(k)}$, and if the makespan differs, i.e., $C_{\max}^{(s)} \gneq C_{\max}^{(o)}$, an optimal/suboptimal pair is created. However, if the makespan would be unaltered the pair is omitted since they give the same optimal makespan. This way, only features from a dispatch resulting in a suboptimal solution is labelled undesirable.
 
 The approach taken in this study is to verify analytically, at each time step, whether it can indeed \emph{somehow} yield an optimal schedule by manipulating the remainder of the sequence, while maintaining the current temporal schedule fixed as its initial state. This also takes care of the scenario that having dispatched a job resulting in a different temporal makespan would have resulted in the same final makespan even if another optimal dispatching sequence would have been chosen. That is to say the data generation takes into consideration when there are multiple optimal solutions to the same problem instance. 
 
@@ -212,7 +212,7 @@ The following ranking strategies were implemented for adding preference pairs to
 \item[$S_p$] partial subsequent rankings, i.e., sufficient set of combinations of $r_i$ and $r_{i+1}$ for $i\in\{1,\ldots,n'\}$, are added to the preference set -- e.g. in the cases that there are more than one operation with the same ranking, only one of that rank is needed to compared to the subsequent rank. Note that $S_p\subset S_f$.
 \item[$S_a$] all rankings, i.e., all possible combinations of $r_i$ and $r_j$ for $i,j\in\{1,\ldots,n'\}$, \mbox{$i\neq j$}, preference pairs are added.
 \end{description}
-where $r_1>r_2>\ldots>r_{n'}$ ($n'\leq n$) are the rankings of the ready-list, $\mathcal{R}^{(k)}$, at time step $k$.
+where $r_1>r_2>\ldots>r_{n'}$ ($n'\leq n$) are the rankings of the job-list, $\mathcal{L}^{(k)}$, at time step $k$.
 
 
 \section{Experimental study}\label{sec:expr}
@@ -360,7 +360,7 @@ Ideally,  it would be best to combine both methodologies: Collect training data 
 \section{Summary and conclusion}\label{sec:summary}
 The study presents strategies for how to generate training data to be used in supervised learning of linear composite dispatching rules for job-shop scheduling.
 The experimental results provide evidence of the benefit of adding suboptimal solutions to the training set apart from optimal ones.
-The subsequent rankings are not of much value, since they are disregarded anyway, but the classification of optimall\footnote{Here the tasks labelled `optimal' do not necessarily yield the optimum makespan (except in the case of following optimal trajectories), instead these are the optimal dispatches for the given partial schedule.} and suboptimal features are of paramount importance.
+The subsequent rankings are not of much value, since they are disregarded anyway, but the classification of optimal\footnote{Here the tasks labelled `optimal' do not necessarily yield the optimum makespan (except in the case of following optimal trajectories), instead these are the optimal dispatches for the given partial schedule.} and suboptimal features are of paramount importance.
 However, the trajectories to create training instances have to be varied to boost performance. This is due to the  fact that sampling only states that  correspond  to optimal or close-to optimal schedules isn't of much use when the model has diverged too far. Since we are dealing with sequential decision making, all future observations are dependent on previous operations. 
 Therefore, to account for this drawback, an imitation learning approach  by \cite{RossB10,RossGB11} could fruitful. 
 In that case, we could continue with our \PREF{opt}{} model and collect a new training set by following the learned policy and use that to create a new model similar to the $\Phi^{all}$ scheme. In short, using the model to update itself. 
