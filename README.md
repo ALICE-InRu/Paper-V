@@ -5,18 +5,18 @@ A supervised learning approach to generating composite linear priority dispatchi
 ## Citation
 ```
 @incollection{InRu15a,
-year={2015},
-isbn={978-3-319-19083-9},
-booktitle={Learning and Intelligent Optimization},
-volume={8994},
-series={Lecture Notes in Computer Science},
-editor={Dhaenens, Clarisse and Jourdan, Laetitia and Marmion, Marie-Eléonore},
-doi={10.1007/978-3-319-19084-6_22},
-title={Generating Training Data for Learning Linear Composite Dispatching Rules for Scheduling},
-url={http://dx.doi.org/10.1007/978-3-319-19084-6_22},
-publisher={Springer International Publishing},
-author={Ingimundardóttir, Helga and Philip Rúnarsson, Thomas},
-pages={236-248},
-language={English}
+  year      = {2015},
+  isbn      = {978-3-319-19083-9},
+  booktitle = {Learning and Intelligent Optimization},
+  volume    = {8994},
+  series    = {Lecture Notes in Computer Science},
+  editor    = {Dhaenens, Clarisse and Jourdan, Laetitia and Marmion, Marie-Eléonore},
+  doi       = {10.1007/978-3-319-19084-6_22},
+  title     = {Generating Training Data for Learning Linear Composite Dispatching Rules for Scheduling},
+  url       = {http://dx.doi.org/10.1007/978-3-319-19084-6_22},
+  publisher = {Springer International Publishing},
+  author    = {Ingimundardóttir, Helga and Rúnarsson, Thomas Philip},
+  pages     = {236-248},
+  language  = {English}
 }
 ```
